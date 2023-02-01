@@ -1,4 +1,4 @@
-local store_area = 'painting:files'
+--[[local store_area = 'painting:files'
 
 local have_painting = minetest.get_modpath("painting")
 
@@ -196,3 +196,4 @@ laptop.register_app("painting", {
 		end
 	end
 })
+-]]

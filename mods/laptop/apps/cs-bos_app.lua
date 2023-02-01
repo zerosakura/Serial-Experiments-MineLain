@@ -1,4 +1,4 @@
-local help_texts = {
+--[[local help_texts = {
 	CLS = "                   Clears the screen.",
 	CD = "                     Change disk. CD [HDD,FDD]",
 	DATE = "                 Displays the current system date.",
@@ -462,3 +462,4 @@ appwindow_formspec_func = function(...)
 	return laptop.apps["launcher"].appwindow_formspec_func(...)
 end,
 })
+--]]

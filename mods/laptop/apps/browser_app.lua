@@ -1,4 +1,4 @@
-laptop.browser_api  = {} -- Be useable from other mods
+--[[laptop.browser_api  = {} -- Be useable from other mods
 
 
 -- Helper function - navigate to page
@@ -134,4 +134,4 @@ laptop.register_view("submit.official", {
 	receive_fields_func = function(app, mtos, sender, fields)
 		laptop.browser_api.header_receive_fields_func(app, mtos, sender, fields)
 	end
-})
+})--]]

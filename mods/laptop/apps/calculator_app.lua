@@ -1,4 +1,4 @@
-laptop.register_app("calculator", {
+--[[laptop.register_app("calculator", {
 	app_name = "Calculator",
 	app_icon = "laptop_calculator.png",
 	app_info = "Perform Mathematical Calculations",
@@ -158,3 +158,4 @@ laptop.register_app("calculator", {
 		end
 	end
 })
+--]]

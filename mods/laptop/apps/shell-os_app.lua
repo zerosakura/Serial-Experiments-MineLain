@@ -1,4 +1,4 @@
-laptop.register_app("shell", {
+--[[laptop.register_app("shell", {
 	app_name = "Shell",
 	app_info = "CS-BOS Graphic Shell",
 	fullscreen = true,
@@ -18,3 +18,4 @@ laptop.register_app("shell", {
 		return laptop.apps["launcher"].appwindow_formspec_func(...)
 	end,
 })
+--]]

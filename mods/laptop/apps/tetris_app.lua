@@ -1,6 +1,6 @@
 -- Based on https://github.com/minetest-mods/homedecor_modpack/blob/master/computer/tetris.lua
 
-local shapes = {
+--[[local shapes = {
    {  { x = {0, 1, 0, 1}, y = {0, 0, 1, 1} } },
 
    {  { x = {1, 1, 1, 1}, y = {0, 1, 2, 3} },
@@ -67,8 +67,8 @@ function tetris_class:new_game()
 		}
 	self.app:get_timer():start(0.3)
 end
-
-
+--]]
+--[[
 function tetris_class:update_boardstring()
 	local scr = {}
 	local ins = #scr
@@ -84,8 +84,9 @@ function tetris_class:update_boardstring()
 				tile[1]*sizex+boardx, comma,
 				i*sizey+boardy, semi,
 				size, comma, size, semi,
-				fixed_color or colors[tile[2]], close }
-
+				--]]
+				--fixed_color or colors[tile[2]], close }
+				--[[
 			ins = ins + 1
 			scr[ins] = concat(tmp)
 		end
@@ -281,4 +282,4 @@ laptop.register_app("tetris", {
 		end
 	end,
 })
-
+--]]

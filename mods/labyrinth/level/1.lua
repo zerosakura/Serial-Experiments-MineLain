@@ -29,8 +29,8 @@ end
 local function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(300, 300)
-    width = 10
-    height = 10
+    width = 9
+    height = 9
 
     --Copy to the map
     local vm         = minetest.get_voxel_manip()
@@ -41,7 +41,7 @@ local function init_level()
         MaxEdge = emax
     }
     local wall = minetest.get_content_id("default:silver_sandstone_block")
-    local air    =   minetest.get_content_id("air")
+    local air = minetest.get_content_id("air")
     local computer = minetest.get_content_id("laptop:portable_workstation_2_closed")
     local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
@@ -50,75 +50,46 @@ local function init_level()
     minetest.set_timeofday(0.8)
 
     --player target coords
-    center_x = (math.floor(height/2)+(math.floor(height/2)+1)%2)*2
-    center_z = (math.floor(width/2)+(math.floor(width/2)+1)%2)*2    
+    center_x = (math.floor(height/2)+(math.floor(height/2)+1)%2)
+    center_z = (math.floor(width/2)+(math.floor(width/2)+1)%2)
     player:set_velocity({x=0,y=0,z=0})
     player:set_pos({x=center_x,y=1.5,z=center_z-3})
 
     --Set up the level itself
     for z=1, width do --z
         for x=1, height do --x
-            if ((z ~= 1 and z ~= width) and (x ~= 1 and x ~= height))   then
-                data[a:index(x*2, 0, z*2)]     = wall
-                data[a:index(x*2+1, 0, z*2)]   = wall
-                data[a:index(x*2+1, 0, z*2+1)] = wall
-                data[a:index(x*2, 0, z*2+1)]   = wall
-            else
-                data[a:index(x*2, 0, z*2)]     = wall
-                data[a:index(x*2+1, 0, z*2)]   = wall
-                data[a:index(x*2+1, 0, z*2+1)] = wall
-                data[a:index(x*2, 0, z*2+1)]   = wall
-            end
+                data[a:index(x, 0, z)] = wall
         end
     end
     for z=1, width do
-        for y=3,9 do
-            data[a:index(1, y, z*2)] = wall
-            data[a:index(1, y, z*2+1)] = wall
-            data[a:index(height*2+1, y, z*2)] = wall
-            data[a:index(height*2+1, y, z*2+1)] = wall
-        end
-        for y=0,2 do
-            data[a:index(1, y, z*2)] = wall
-            data[a:index(1, y, z*2+1)] = wall
-            data[a:index(height*2+1, y, z*2)] = wall
-            data[a:index(height*2+1, y, z*2+1)] = wall
+        for y=0,8 do
+            data[a:index(1, y, z)] = wall
+            data[a:index(height, y, z)] = wall
         end
     end
     for x=1, height do
-        for y=3,9 do
-            data[a:index(x*2, y, 1)] = wall
-            data[a:index(x*2+1, y, 1)] = wall
-            data[a:index(x*2, y, width*2+1)] = wall
-            data[a:index(x*2+1, y, width*2+1)] = wall
-        end
-        for y=0,2 do
-            data[a:index(x*2, y, 1)] = wall
-            data[a:index(x*2+1, y, 1)] = wall
-            data[a:index(x*2, y, width*2+1)] = wall
-            data[a:index(x*2+1, y, width*2+1)] = wall
+        for y=0,8 do
+            data[a:index(x, y, 1)] = wall
+            data[a:index(x, y, width)] = wall
         end
     end
-    for y=1, 10 do
-        for x=1, height do
-            data[a:index(x*2, y, center_z+1)] = glass
-            if(x ~= height) then
-                data[a:index(x*2+1, y, center_z+1)] = glass
-            end
+    for y=1, 8 do
+        for x=2, height-1 do
+            data[a:index(x, y, center_z)] = glass
         end
     end
 
-    data[a:index(center_x-8, 1, center_z-5)] = desk
-    data[a:index(center_x-8, 1, center_z-6)] = desk
-    data[a:index(center_x-8, 2, center_z-5)] = computer    
+    data[a:index(center_x-3, 1, center_z-2)] = desk
+    data[a:index(center_x-3, 1, center_z-3)] = desk
+    data[a:index(center_x-3, 2, center_z-2)] = computer    
     
     local param2 = vm:get_param2_data()
     local rotation = minetest.dir_to_facedir({x=-1,y=0,z=0})
-    param2[a:index(center_x-8, 2, center_z-5)] = rotation
+    param2[a:index(center_x-3, 2, center_z-2)] = rotation
 
-    data[a:index(center_x, 1, width*2+1)] = air
-    data[a:index(center_x, 2, width*2+1)] = air
-    data[a:index(center_x, 1, width*2+1)] = door
+    data[a:index(center_x, 1, width)] = air
+    data[a:index(center_x, 2, width)] = air
+    data[a:index(center_x, 1, width)] = door
 
     minetest.register_globalstep(
         function(dtime)

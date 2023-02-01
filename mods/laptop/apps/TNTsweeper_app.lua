@@ -1,4 +1,4 @@
-local level_config = {
+--[[local level_config = {
 	['Small'] = { w = 9, h = 9, bomb = 10, icon_size = 0.9 },
 	['Small hard'] = { w = 9, h = 9, bomb = 35, icon_size = 0.9},
 	['Midsize'] = { w = 16, h = 16, bomb = 40, icon_size = 0.7 },
@@ -193,3 +193,4 @@ laptop.register_app("tntsweeper", {
 		end
 	end
 })
+--]]
