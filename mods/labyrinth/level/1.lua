@@ -144,6 +144,6 @@ local player = minetest.get_player_by_name("singleplayer")
         end
     end
     )
+    --]]
     vm:set_data(data)
     vm:write_to_map(true)
-    --]]
