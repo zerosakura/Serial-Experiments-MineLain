@@ -72,7 +72,13 @@ laptop.register_app("stickynote", {
 			})
 		elseif fields.exec then 
 			cmd = data.text
-			loadstring(cmd)()
+			local func = {loadstring(cmd)}
+			if (func[1] ~= nil) then
+				func[1]()
+			else 
+				minetest.chat_send_all("Error!")
+				minetest.chat_send_all(func[2])
+			end
 		elseif fields.save_selected_disk and fields.save_selected_file then
 			data.selected_disk_name = fields.save_selected_disk
 			data.selected_file_name = fields.save_selected_file
