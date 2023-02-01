@@ -337,7 +337,7 @@ local function onRecieveFields(player, formname, fields)
     end
 end
 
-minetest.register_on_player_receive_fields(onRecieveFields)
+--minetest.register_on_player_receive_fields(onRecieveFields)
 
 local function safe_clear(w, l)
     local vm         = minetest.get_voxel_manip()
@@ -366,18 +366,18 @@ local function safe_clear(w, l)
     vm:set_data(data)
     vm:write_to_map(true)
 end
-
+--[[
 minetest.register_on_joinplayer(
 function(player)
     safe_clear(300,300)
-    --[[player:set_properties({
+    player:set_properties({
 			textures = {"blank.png", "blank.png"},
 			visual = "upright_sprite",
 			collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.75, 0.3},
 			stepheight = 0.6,
 			eye_height = 1.625,
-		})--]]
-    --[[player:hud_set_flags(
+		})
+    player:hud_set_flags(
         {
             hotbar = false,
             healthbar = false,
@@ -387,19 +387,20 @@ function(player)
             minimap = false,
             minimap_radar = false,
         }
-    )--]]
-    -- player:set_inventory_formspec(pause_menu())
+    )
+     player:set_inventory_formspec(pause_menu())
     minetest.show_formspec(player:get_player_name(), "labyrinth:main", main_menu())
-    --[[
+    
     music = minetest.sound_play("main", {
         gain = 1.0,   -- default
         fade = 0.8,   -- default, change to a value > 0 to fade the sound in
         loop = true,
     })
-    --]]
+    
 end
 )
-
+--]]
+--[[
 minetest.register_globalstep(
 function(dtime)
     local player = minetest.get_player_by_name("singleplayer")
@@ -412,12 +413,13 @@ function(dtime)
         end
     end
 end
-)
+)--]]
 
 
 
 
-function addWall(player)
+function addWall()
+    local player = minetest.get_player_by_name("singleplayer")
     local maze = GenMaze(math.floor(gwidth/2)*2+((gwidth+1)%2),math.floor(gheight/2)*2+(gheight+1)%2)
     local loc_maze = maze
     width = loc_maze.width
@@ -513,13 +515,17 @@ end
 
 minetest.register_chatcommand("go", {	
     func = function(name, cmd)
-        player = minetest.get_player_by_name("singleplayer")
-        minetest.sound_play("win")
-        minetest.chat_send_all(minetest.colorize(primary_c, name..", Congrats on finishing ".. styles[selectedStyle].name).. "!")        
+       -- player = minetest.get_player_by_name("singleplayer")
+       -- minetest.sound_play("win")
+      --  minetest.chat_send_all(minetest.colorize(primary_c, name..", Congrats on finishing ".. styles[selectedStyle].name).. "!")        
         --local eval = load cmd
         --eval()
         --minetest.chat_send_all(minetest.colorize(primary_c, loadstring("return to_game_menu(player)")()))
-        minetest.chat_send_all(minetest.colorize(primary_c, loadstring("return addWall(player)")()))
+    --loadstring("return addWall()")()
+    loadstring("function ok() \
+        return 1 \
+    end return  \
+         ok()")()
     end,
 })
 
