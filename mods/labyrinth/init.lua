@@ -14,7 +14,8 @@
 
 --Settings Changes --
 --BE VERY CAREFUL WHEN PLAYING WITH OTHER PEOPLES SETTINGS--
-minetest.settings:set("enable_damage","false")
+--minetest.settings:set("enable_damage","false")
+--[[
 local max_block_send_distance = minetest.settings:get("max_block_send_distance")
 local block_send_optimize_distance = minetest.settings:get("block_send_optimize_distance")
 if max_block_send_distance == 31 then -- no one would set these to 31, so it must have been a crash,
@@ -29,6 +30,7 @@ minetest.register_on_shutdown(function()
     minetest.settings:set("max_block_send_distance",tostring(max_block_send_distance))
     minetest.settings:set("block_send_optimize_distance",tostring(block_send_optimize_distance))
 end)
+--]]
 --End Settings Changes--
 
 --Load our Settings--
@@ -105,13 +107,15 @@ minetest.register_node("labyrinth:inv",
   light_source = 11,
 })
 
+--[[
 --Override the default hand
 minetest.register_item(":", {
 	type = "none",
 	wield_image = "blank.png",
-	groups = {not_in_creative_inventory=1},
+	--groups = {not_in_creative_inventory=0},
 	range = 0
 })
+]]
 
 --Style Registrations
 dofile(modpath .. "/styles/classic.lua")
@@ -138,14 +142,14 @@ local function setup(player)
     restart = styles[selectedStyle].gen_map
     cleanup = styles[selectedStyle].cleanup
     restart(maze, player)
-    if music then
+    --[[if music then
         minetest.sound_fade(music, 0.5, 0)
     end
     music = minetest.sound_play(styles[selectedStyle].music, {
         gain = 1.0,   -- default
         fade = 0.5,   -- default, change to a value > 0 to fade the sound in
         loop = true,
-    })
+    })--]]
     minetest.after(2, function() first_load = true end)
 end
 
@@ -160,7 +164,7 @@ local function table_concat(t1,t2)
 end
 
 --Main_Menu formspec function for Labyrinth
-local function main_menu(width_in, height_in, scroll_in)
+local function main_menu(width_in, height_in, scroll_in)    
     local width  = width_in or gwidth
     local height  = height_in or gheight
     local scroll = scroll_in or 0
@@ -244,14 +248,14 @@ function to_game_menu(player)
     first_load = false
     minetest.show_formspec(player:get_player_name(), "labyrinth:main", main_menu())
     cleanup(gwidth, gheight)
-    if music then
+    --[[if music then
         minetest.sound_fade(music, 0.5, 0)
     end
     music = minetest.sound_play("main", {
         gain = 1.0,   -- default
         fade = 0.8,   -- default, change to a value > 0 to fade the sound in
         loop = true,
-    })
+    })--]]
 end
 
 ----------------------------------------------------------
@@ -366,14 +370,14 @@ end
 minetest.register_on_joinplayer(
 function(player)
     safe_clear(300,300)
-    player:set_properties({
+    --[[player:set_properties({
 			textures = {"blank.png", "blank.png"},
 			visual = "upright_sprite",
 			collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.75, 0.3},
 			stepheight = 0.6,
 			eye_height = 1.625,
-		})
-    player:hud_set_flags(
+		})--]]
+    --[[player:hud_set_flags(
         {
             hotbar = false,
             healthbar = false,
@@ -383,14 +387,16 @@ function(player)
             minimap = false,
             minimap_radar = false,
         }
-    )
-    player:set_inventory_formspec(pause_menu())
+    )--]]
+    -- player:set_inventory_formspec(pause_menu())
     minetest.show_formspec(player:get_player_name(), "labyrinth:main", main_menu())
+    --[[
     music = minetest.sound_play("main", {
         gain = 1.0,   -- default
         fade = 0.8,   -- default, change to a value > 0 to fade the sound in
         loop = true,
     })
+    --]]
 end
 )
 
