@@ -26,10 +26,9 @@ local function safe_clear(w, l)
     vm:write_to_map(true)
 end
 
-local player = minetest.get_player_by_name("singleplayer")
+local function init_level()
+    local player = minetest.get_player_by_name("singleplayer")
     safe_clear(300, 300)
-    --local maze = GenMaze(math.floor(gwidth/2)*2+((gwidth+1)%2),math.floor(gheight/2)*2+(gheight+1)%2)
-    --local loc_maze = maze
     width = 10
     height = 10
 
@@ -41,26 +40,18 @@ local player = minetest.get_player_by_name("singleplayer")
         MinEdge = emin,
         MaxEdge = emax
     }
-    local club_ground  = minetest.get_content_id("labyrinth:club_ground")
-    --local club_wall    = minetest.get_content_id("labyrinth:club_wall")
-    wall = minetest.get_content_id("default:silver_sandstone_block")
-    local club_ceiling = minetest.get_content_id("labyrinth:club_ceiling")
-    local club_light   = minetest.get_content_id("labyrinth:club_light")
-    local club_walkway = minetest.get_content_id("labyrinth:club_walkway")
-    local club_edge    = minetest.get_content_id("labyrinth:club_edge")
+    local wall = minetest.get_content_id("default:silver_sandstone_block")
     local air    =   minetest.get_content_id("air")
     local computer = minetest.get_content_id("laptop:portable_workstation_2_closed")
     local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
+    local desk = minetest.get_content_id("homedecor:table_mahogany")
 
     minetest.set_timeofday(0.8)
 
     --player target coords
     center_x = (math.floor(height/2)+(math.floor(height/2)+1)%2)*2
-    center_z = (math.floor(width/2)+(math.floor(width/2)+1)%2)*2
-    --Finally, move  the player
-    --player:set_physics_override({gravity=0})
-    --player:set_physics_override({gravity=0})
+    center_z = (math.floor(width/2)+(math.floor(width/2)+1)%2)*2    
     player:set_velocity({x=0,y=0,z=0})
     player:set_pos({x=center_x,y=1.5,z=center_z-3})
 
@@ -77,16 +68,7 @@ local player = minetest.get_player_by_name("singleplayer")
                 data[a:index(x*2+1, 0, z*2)]   = wall
                 data[a:index(x*2+1, 0, z*2+1)] = wall
                 data[a:index(x*2, 0, z*2+1)]   = wall
-
-                --data[a:index(x*2,   1, z*2)]   = wall
-                --data[a:index(x*2+1, 1, z*2)]   = wall
-                --data[a:index(x*2+1, 1, z*2+1)] = wall
-                --data[a:index(x*2,   1, z*2+1)] = wall
             end
-            --data[a:index(x*2,   10, z*2)]   = club_light
-            --data[a:index(x*2+1, 10, z*2)]   = club_ceiling
-            --data[a:index(x*2+1, 10, z*2+1)] = club_ceiling
-            --data[a:index(x*2,   10, z*2+1)] = club_ceiling
         end
     end
     for z=1, width do
@@ -126,24 +108,35 @@ local player = minetest.get_player_by_name("singleplayer")
         end
     end
 
-    data[a:index(center_x, 1, center_z-2)] = computer
+    data[a:index(center_x-8, 1, center_z-5)] = desk
+    data[a:index(center_x-8, 1, center_z-6)] = desk
+    data[a:index(center_x-8, 2, center_z-5)] = computer    
+    
+    local param2 = vm:get_param2_data()
+    local rotation = minetest.dir_to_facedir({x=-1,y=0,z=0})
+    param2[a:index(center_x-8, 2, center_z-5)] = rotation
+
     data[a:index(center_x, 1, width*2+1)] = air
     data[a:index(center_x, 2, width*2+1)] = air
     data[a:index(center_x, 1, width*2+1)] = door
---[[
+
     minetest.register_globalstep(
-    function(dtime)
-        local player = minetest.get_player_by_name("singleplayer")
-        if player then
-            local pos = player:get_pos()
-            if pos.y < -10 then
-                minetest.sound_play("win")
-                minetest.chat_send_all(minetest.colorize(primary_c,"Congrats on finishing ".. styles[selectedStyle].name).. "!")
-                to_game_menu(player)
+        function(dtime)
+            local player = minetest.get_player_by_name("singleplayer")
+            if player then
+                local pos = player:get_pos()
+                if pos.y < -10 then
+                    minetest.sound_play("win")
+                    minetest.chat_send_all(minetest.colorize(primary_c,"Congrats on finishing ".. styles[selectedStyle].name).. "!")
+                    to_game_menu(player)
+                end
             end
         end
-    end
     )
-    --]]
+
     vm:set_data(data)
+    vm:set_param2_data(param2)
     vm:write_to_map(true)
+end
+
+init_level()
