@@ -36,6 +36,7 @@ local function init_level()
     local vm         = minetest.get_voxel_manip()
     local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height*2,y=10,z=width*2})
     local data = vm:get_data()
+    local param2 = vm:get_param2_data()
     local a = VoxelArea:new{
         MinEdge = emin,
         MaxEdge = emax
@@ -47,63 +48,55 @@ local function init_level()
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
 
-    minetest.set_timeofday(0.8)
-
+    minetest.set_timeofday(0.2)
     --player target coords
-    center_x = (math.floor(height/2)+(math.floor(height/2)+1)%2)
-    center_z = (math.floor(width/2)+(math.floor(width/2)+1)%2)
-    player:set_velocity({x=0,y=0,z=0})
+    center_x = math.floor((height+1)/2)
+    center_z = math.floor((width+1)/2)
     player:set_pos({x=center_x,y=1.5,z=center_z-3})
 
-    --Set up the level itself
-    for z=1, width do --z
-        for x=1, height do --x
-                data[a:index(x, 0, z)] = wall
+    --Set up the level itself        
+    for x=1,height do --x
+        for z=1,width do --z        
+            data[a:index(x, 0, z)] = wall
         end
-    end
-    for z=1, width do
-        for y=0,8 do
+    end        
+    for y=0,8 do
+        for z=1,width do
             data[a:index(1, y, z)] = wall
             data[a:index(height, y, z)] = wall
         end
     end
-    for x=1, height do
+    for x=1,height do
         for y=0,8 do
             data[a:index(x, y, 1)] = wall
             data[a:index(x, y, width)] = wall
         end
-    end
-    for y=1, 8 do
-        for x=2, height-1 do
+    end 
+    data[a:index(2, 1, 2)] = desk
+    data[a:index(2, 1, 3)] = desk
+    data[a:index(2, 2, 3)] = computer    
+    data[a:index(center_x, 2, width)] = air
+    data[a:index(center_x, 1, width)] = door        
+    param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
+
+    for y=1,3 do
+        for x=2,height-1 do
             data[a:index(x, y, center_z)] = glass
         end
     end
 
-    data[a:index(center_x-3, 1, center_z-2)] = desk
-    data[a:index(center_x-3, 1, center_z-3)] = desk
-    data[a:index(center_x-3, 2, center_z-2)] = computer    
-    
-    local param2 = vm:get_param2_data()
-    local rotation = minetest.dir_to_facedir({x=-1,y=0,z=0})
-    param2[a:index(center_x-3, 2, center_z-2)] = rotation
-
-    data[a:index(center_x, 1, width)] = air
-    data[a:index(center_x, 2, width)] = air
-    data[a:index(center_x, 1, width)] = door
-
     minetest.register_globalstep(
         function(dtime)
-            local player = minetest.get_player_by_name("singleplayer")
-            if player then
-                local pos = player:get_pos()
-                if pos.y < -10 then
-                    minetest.sound_play("win")
-                    minetest.chat_send_all(minetest.colorize(primary_c,"Congrats on finishing ".. styles[selectedStyle].name).. "!")
-                    to_game_menu(player)
-                end
+            if player then                
+                local node = minetest.get_node(player:get_pos())
+                minetest.chat_send_all(dump(node))
+                minetest.chat_send_all(node.name)
+                if node.name == "doors:door_steel_a" then
+                    init_level()
+                end                
             end
         end
-    )
+    )    
 
     vm:set_data(data)
     vm:set_param2_data(param2)
@@ -111,3 +104,5 @@ local function init_level()
 end
 
 init_level()
+
+
