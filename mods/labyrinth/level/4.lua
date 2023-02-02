@@ -1,12 +1,12 @@
 local function init_level()
     local player = minetest.get_player_by_name("singleplayer")
-    safe_clear(10, 10)
-    width = 9
+    safe_clear(31, 31)
+    width = 31
     height = 9
 
     --Copy to the map
     local vm         = minetest.get_voxel_manip()
-    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height*2,y=10,z=width*2})
+    local emin, emax = vm:read_from_map({x=0,y=-50,z=0}, {x=height*2,y=50,z=width*2})
     local data = vm:get_data()
     local param2 = vm:get_param2_data()
     local a = VoxelArea:new{
@@ -15,11 +15,10 @@ local function init_level()
     }
     local wall = minetest.get_content_id("default:silver_sandstone_block")
     local air = minetest.get_content_id("air")
-    local computer = minetest.get_content_id("laptop:portable_workstation_2_closed")
-    local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
+    --local computer = minetest.get_content_id("laptop:portable_workstation_2_closed")
+    --local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
-    local book = minetest.get_content_id("homedecor:book_red")
 
     minetest.set_timeofday(0.2)
     --player target coords
@@ -29,38 +28,43 @@ local function init_level()
 
     --Set up the level itself        
     for x=1,height do --x
-        for z=1,width do --z        
-            data[a:index(x, 0, z)] = wall
+        for z=1,width do --z 
+            for y=-4,0,1 do
+                data[a:index(x, y, z)] = wall
+            end
         end
     end        
-    for y=0,8 do
+    for y=-4,8,1 do
         for z=1,width do
             data[a:index(1, y, z)] = wall
             data[a:index(height, y, z)] = wall
         end
     end
     for x=1,height do
-        for y=0,8 do
+        for y=-4,8,1 do
             data[a:index(x, y, 1)] = wall
             data[a:index(x, y, width)] = wall
         end
     end 
-    data[a:index(2, 1, 2)] = desk
-    data[a:index(2, 1, 3)] = desk
-    data[a:index(2, 2, 3)] = book    
-    data[a:index(center_x, 2, width)] = air
-    data[a:index(center_x, 1, width)] = door        
-    param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
-    for y=1,3 do
-        for x=2,height-1 do
-            data[a:index(x, y, center_z)] = glass
+    for x=2,height-1 do
+        for z=2,width-1 do
+            for y=-3,0 do
+                if((z<center_z+13)and(z>center_z-13)) then
+                    data[a:index(x, y, z)] = air
+                end
+            end
         end
     end
 
-    local meta = minetest.get_meta({ x = 2, y = 2, z = 3 })
-    meta:set_string("text", "111")
+    data[a:index(2, 1, 2)] = desk
+    data[a:index(2, 1, 3)] = desk    
+    -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
+    data[a:index(center_x, 1, 5)] = wall
+    data[a:index(center_x, 1, 8)] = wall
+    data[a:index(center_x, 1, width)] = door
+    data[a:index(center_x, 2, width)] = air
 
     minetest.register_globalstep(
         function(dtime)

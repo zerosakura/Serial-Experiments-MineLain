@@ -19,7 +19,6 @@ local function init_level()
     local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
-    local book = minetest.get_content_id("homedecor:book_red")
 
     minetest.set_timeofday(0.2)
     --player target coords
@@ -46,21 +45,13 @@ local function init_level()
         end
     end 
     data[a:index(2, 1, 2)] = desk
-    data[a:index(2, 1, 3)] = desk
-    data[a:index(2, 2, 3)] = book    
-    data[a:index(center_x, 2, width)] = air
-    data[a:index(center_x, 1, width)] = door        
-    param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
+    data[a:index(2, 1, 3)] = desk    
+    -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
-    for y=1,3 do
-        for x=2,height-1 do
-            data[a:index(x, y, center_z)] = glass
-        end
-    end
-
-    local meta = minetest.get_meta({ x = 2, y = 2, z = 3 })
-    meta:set_string("text", "111")
-
+    data[a:index(3, 2, 4)] = wall
+    data[a:index(4, 3, 5)] = wall    
+    data[a:index(center_x, 6, width)] = door
+    data[a:index(center_x, 7, width)] = air
 
     minetest.register_globalstep(
         function(dtime)
