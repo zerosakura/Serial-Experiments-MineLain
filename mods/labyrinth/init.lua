@@ -113,28 +113,54 @@ dofile(modpath .. "/styles/grassy.lua")
 dofile(modpath .. "/styles/glass.lua")
 dofile(modpath .. "/styles/cave.lua")
 dofile(modpath .. "/styles/club.lua")
+dofile(modpath .. "/setup.lua")
 
-local function setup()
-    local modpath = minetest.get_modpath("labyrinth")
-    dofile(modpath .. "/level/start.lua")
-    local func = {loadstring(level_init())}
-    if (func[1] ~= nil) then
-        func[1]()
-    else 
-        minetest.chat_send_all("Error!")
-        minetest.chat_send_all(func[2])
+function safe_clear(w, l)
+    local vm         = minetest.get_voxel_manip()
+    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=w,y=10,z=l})
+    local data = vm:get_data()
+    local a = VoxelArea:new{
+        MinEdge = emin,
+        MaxEdge = emax
+    }
+    local air = minetest.get_content_id("air")
+    
+    for x=0, w do
+        for y=0,10 do
+            for z=0,l do            
+                data[a:index(x, y, z)] = air
+            end
+        end
     end
+    vm:set_data(data)
+    vm:write_to_map(true)
 end
 
 minetest.register_chatcommand("init", {	
     func = function()        
-        setup()
+        this_level()
+    end,
+})
+
+minetest.register_chatcommand("go", {	
+    func = function(target_level)
+        level = target_level
+        this_level()
     end,
 })
 
 
+minetest.register_chatcommand("go", {
+    params = "<int>",
+    func = function(_, target)    
+        level = target or level
+        this_level()
+    end,
+})
+
 minetest.register_on_joinplayer(
     function(player)
-        setup()
+        safe_clear(300, 300)
+        this_level()
     end
 )

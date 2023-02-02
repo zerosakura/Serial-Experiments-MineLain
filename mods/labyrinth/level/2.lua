@@ -45,17 +45,13 @@ local function init_level()
         end
     end 
     data[a:index(2, 1, 2)] = desk
-    data[a:index(2, 1, 3)] = desk
-    data[a:index(2, 2, 3)] = computer    
-    data[a:index(center_x, 2, width)] = air
-    data[a:index(center_x, 1, width)] = door        
-    param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
+    data[a:index(2, 1, 3)] = desk    
+    -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
-    for y=1,3 do
-        for x=2,height-1 do
-            data[a:index(x, y, center_z)] = glass
-        end
-    end
+    data[a:index(3, 2, 4)] = wall
+    data[a:index(4, 3, 5)] = wall    
+    data[a:index(center_x, 6, width)] = door
+    data[a:index(center_x, 7, width)] = air
 
     minetest.register_globalstep(
         function(dtime)

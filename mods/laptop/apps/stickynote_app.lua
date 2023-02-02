@@ -1,9 +1,7 @@
 local store_area = 'stickynote:files'
---[[file = io.open("../level/level1.lua", "r")
-code = file:read("a")--]]
-
+local cmd = ''
 local modpath = minetest.get_modpath("labyrinth")
-dofile(modpath .. "/level/start.lua")
+dofile(modpath .. "/setup.lua")
 
 laptop.register_app("stickynote", {
 	app_name = "Notepad",
@@ -12,11 +10,12 @@ laptop.register_app("stickynote", {
 	formspec_func = function(app, mtos)
 		local data = mtos.bdev:get_app_storage('system', 'stickynote')
 		data.files = data.files or {}
-		data.text = data.text or code or ""
+		if new_level == true then
+			data.text = level_code(level)
+			new_level = false
+		end
+		-- data.text = cmd or level_code(level)
 		
-		data.text = level_init()
-		-- data.text = "123122321"
-
 		if data.selected_disk_name and data.selected_file_name then
 			app.app_info = app.app_info..' - Open File: '..data.selected_disk_name..' / '..data.selected_file_name
 		end
