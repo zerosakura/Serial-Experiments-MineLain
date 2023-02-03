@@ -1,3 +1,5 @@
+story = 0
+
 local function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(10, 10)
@@ -6,7 +8,7 @@ local function init_level()
 
     --Copy to the map
     local vm         = minetest.get_voxel_manip()
-    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height*2,y=10,z=width*2})
+    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height,y=10,z=width})
     local data = vm:get_data()
     local param2 = vm:get_param2_data()
     local a = VoxelArea:new{
@@ -24,7 +26,6 @@ local function init_level()
     --player target coords
     center_x = math.floor((height+1)/2)
     center_z = math.floor((width+1)/2)
-    --player:set_pos({x=center_x,y=1.5,z=center_z-3})
 
     --Set up the level itself        
     for x=1,height do --x
@@ -61,18 +62,38 @@ local function init_level()
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
+                -- minetest.chat_send_all(dump(node))
                 if node.name == "doors:door_steel_a" then
                     next_level()
-                end                
+                end
+
+                local node2 = minetest.get_node({x=2,y=2,z=3})
+                if story == 0 and node2.name == "laptop:portable_workstation_2_open_on" then
+                    minetest.chat_send_all("阿米娅：做的好，检测到 laptop 已在运行。")
+                    minetest.chat_send_all("阿米娅：博士，接下来用鼠标右键进入 laptop 的操作界面。")
+                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标右键，打开处于开机状态的 laptop。"))
+                    story = story + 1
+                end
             end
         end
     )    
 
     vm:set_data(data)
     vm:set_param2_data(param2)
-    vm:write_to_map(true)
+    vm:write_to_map(true) 
+end
+
+local function init_story() 
+    minetest.chat_send_all("阿米娅：博士，博士...")
+    minetest.chat_send_all("阿米娅：快醒醒...")
+    minetest.chat_send_all("博士：我是谁，我在哪？")
+    minetest.chat_send_all("阿米娅：博士，我是阿米娅，你被整合运动抓走了，霜星要拿你做实验 ...")
+    minetest.chat_send_all("博士：什么。")
+    minetest.chat_send_all("阿米娅：别担心，凯尔西已经黑入了整合运动的系统，看见桌上的 laptop 了吗？")
+    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标左键敲击两次，打开桌上的 laptop 并开机。"))
 end
 
 init_level()
+init_story()
 
 

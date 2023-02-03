@@ -20,7 +20,6 @@ local function init_level()
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
 
-    minetest.set_timeofday(0.2)
     --player target coords
     center_x = math.floor((height+1)/2)
     center_z = math.floor((width+1)/2)

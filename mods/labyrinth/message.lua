@@ -11,7 +11,7 @@ function show_message(player, text, image)
     })
     imageID = player:hud_add({
         hud_elem_type = "image",
-        position  = {x = 0.15, y = 0.15},
+        position  = {x = 0.15, y = 0.85},
         offset    = {x = 0, y = 0},
         text      = image,
         alignment = 0,

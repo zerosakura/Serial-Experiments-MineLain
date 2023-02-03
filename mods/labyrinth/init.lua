@@ -150,7 +150,6 @@ minetest.register_chatcommand("go", {
     end,
 })
 
-
 minetest.register_chatcommand("go", {
     params = "<int>",
     func = function(_, target)    
