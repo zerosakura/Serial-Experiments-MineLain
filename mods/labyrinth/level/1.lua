@@ -1,6 +1,19 @@
+local modpath = minetest.get_modpath("labyrinth")
+dofile(modpath .. "/level/1_editable.lua")
+
 story = 0
 
-local function init_level()
+local function init_story() 
+    minetest.chat_send_all("阿米娅：博士，博士...")
+    minetest.chat_send_all("阿米娅：快醒醒...")
+    minetest.chat_send_all("博士：我是谁，我在哪？")
+    minetest.chat_send_all("阿米娅：博士，我是阿米娅，你被整合运动抓走了，霜星要拿你做实验 ...")
+    minetest.chat_send_all("博士：什么。")
+    minetest.chat_send_all("阿米娅：别担心，凯尔西已经黑入了整合运动的系统，看见桌上的 laptop 了吗？")
+    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标左键敲击两次，打开桌上的 laptop 并开机。"))
+end
+
+function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(10, 10)
     width = 9
@@ -52,12 +65,6 @@ local function init_level()
     data[a:index(center_x, 1, width)] = door        
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
-    for y=1,3 do
-        for x=2,height-1 do
-            data[a:index(x, y, center_z)] = glass
-        end
-    end
-
     minetest.register_globalstep(
         function(dtime)
             if player then                
@@ -87,19 +94,10 @@ local function init_level()
     vm:set_data(data)
     vm:set_param2_data(param2)
     vm:write_to_map(true) 
+
+    draw()    
 end
 
-local function init_story() 
-    minetest.chat_send_all("阿米娅：博士，博士...")
-    minetest.chat_send_all("阿米娅：快醒醒...")
-    minetest.chat_send_all("博士：我是谁，我在哪？")
-    minetest.chat_send_all("阿米娅：博士，我是阿米娅，你被整合运动抓走了，霜星要拿你做实验 ...")
-    minetest.chat_send_all("博士：什么。")
-    minetest.chat_send_all("阿米娅：别担心，凯尔西已经黑入了整合运动的系统，看见桌上的 laptop 了吗？")
-    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标左键敲击两次，打开桌上的 laptop 并开机。"))
-end
-
-init_level()
 init_story()
-
+init_level()
 

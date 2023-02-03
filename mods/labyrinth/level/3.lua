@@ -1,4 +1,7 @@
-local function init_level()
+local modpath = minetest.get_modpath("labyrinth")
+dofile(modpath .. "/level/3_editable.lua")
+
+function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(10, 10)
     width = 9
@@ -43,8 +46,9 @@ local function init_level()
             data[a:index(x, y, width)] = wall
         end
     end 
+
     data[a:index(2, 1, 2)] = desk
-    data[a:index(2, 1, 3)] = desk    
+    data[a:index(2, 1, 3)] = desk  
     -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
     data[a:index(3, 2, 4)] = wall
@@ -66,6 +70,8 @@ local function init_level()
     vm:set_data(data)
     vm:set_param2_data(param2)
     vm:write_to_map(true)
+
+    draw()
 end
 
 init_level()

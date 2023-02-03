@@ -1,4 +1,7 @@
-local function init_level()
+local modpath = minetest.get_modpath("labyrinth")
+dofile(modpath .. "/level/2_editable.lua")
+
+function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(10, 10)
     width = 9
@@ -51,15 +54,8 @@ local function init_level()
     data[a:index(center_x, 1, width)] = door        
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=1,y=0,z=0})
 
-    for y=1,3 do
-        for x=2,height-1 do
-            data[a:index(x, y, center_z)] = glass
-        end
-    end
-
     local meta = minetest.get_meta({ x = 2, y = 2, z = 3 })
     meta:set_string("text", "111")
-
 
     minetest.register_globalstep(
         function(dtime)
@@ -75,6 +71,8 @@ local function init_level()
     vm:set_data(data)
     vm:set_param2_data(param2)
     vm:write_to_map(true)
+
+    draw()
 end
 
 init_level()

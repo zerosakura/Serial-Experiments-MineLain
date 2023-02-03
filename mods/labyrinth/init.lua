@@ -49,8 +49,6 @@ local background_secondary_c = handleColor("laby_background_secondary_c", "#D0D0
 
 local modpath = minetest.get_modpath("labyrinth")
 
-local DefaultGenerateMaze = dofile(modpath .. "/maze.lua")
-local GenMaze = DefaultGenerateMaze
 
 -- Set mapgen to singlenode if not already
 
@@ -77,27 +75,6 @@ local numStyles = 0
 local styles = {}
 local music = nil
 
--------------------
--- Global function laby_register_style(name, music_name, map_from_maze, cleanup, genMaze)
---
--- name: text in lowercase, typically, of the map style
--- music_name: music file name
--- map_from_maze = function(maze, player)
---   maze is from GenMaze() above, an input
---   player is the player_ref to place them at the start of the maze
--- cleanup = function (maze_w, maze_h) -- should replace maze with air
--- genMaze is an optional arguement to provide your own algorithm for this style to generate maps with
---
-function laby_register_style(name, music_name, map_from_maze, cleanup, genMaze)
-    numStyles = numStyles + 1
-    styles[numStyles] = {}
-    styles[numStyles].name = name
-    styles[numStyles].music = music_name
-    styles[numStyles].gen_map = map_from_maze
-    styles[numStyles].cleanup = cleanup
-    styles[numStyles].genMaze = genMaze
-end
-
 --Common node between styles, used for hidden floor to fall onto
 minetest.register_node("labyrinth:inv",
 {
@@ -108,11 +85,6 @@ minetest.register_node("labyrinth:inv",
 })
 
 --Style Registrations
-dofile(modpath .. "/styles/classic.lua")
-dofile(modpath .. "/styles/grassy.lua")
-dofile(modpath .. "/styles/glass.lua")
-dofile(modpath .. "/styles/cave.lua")
-dofile(modpath .. "/styles/club.lua")
 dofile(modpath .. "/message.lua")
 dofile(modpath .. "/setup.lua")
 
@@ -128,8 +100,12 @@ function safe_clear(w, l)
     
     for x=0, w do
         for y=0,10 do
-            for z=0,l do            
-                data[a:index(x, y, z)] = air
+            for z=0,l do   
+                local node = minetest.get_node({x=x,y=y,z=z})
+                -- minetest.chat_send_all(dump(node))
+                if string.find(node.name,"laptop") ~= 1 then         
+                    data[a:index(x, y, z)] = air
+                end
             end
         end
     end

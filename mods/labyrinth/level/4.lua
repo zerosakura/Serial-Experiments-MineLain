@@ -1,4 +1,7 @@
-local function init_level()
+local modpath = minetest.get_modpath("labyrinth")
+dofile(modpath .. "/level/4_editable.lua")
+
+function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(31, 31)
     width = 31
@@ -15,15 +18,12 @@ local function init_level()
     }
     local wall = minetest.get_content_id("default:silver_sandstone_block")
     local air = minetest.get_content_id("air")
-    --local computer = minetest.get_content_id("laptop:portable_workstation_2_closed")
-    --local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
 
     --player target coords
     center_x = math.floor((height+1)/2)
     center_z = math.floor((width+1)/2)
-    --player:set_pos({x=center_x,y=1.5,z=center_z-3})
 
     --Set up the level itself        
     for x=1,height do --x
@@ -79,6 +79,8 @@ local function init_level()
     vm:set_data(data)
     vm:set_param2_data(param2)
     vm:write_to_map(true)
+
+    draw()
 end
 
 init_level()

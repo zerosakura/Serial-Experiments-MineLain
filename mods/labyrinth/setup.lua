@@ -34,3 +34,13 @@ function this_level()
     player:set_pos({x=5,y=1.5,z=2})
     go_level(level)
 end
+
+function place(xx,yy,zz,ss)
+    if ss == "glass" then 
+        ss = "xpanes:obsidian_pane_flat"
+    elseif ss == "stone" then 
+        ss = "default:silver_sandstone_block"
+    end
+
+    minetest.set_node({x=xx,y=yy,z=zz}, {name = ss})
+end

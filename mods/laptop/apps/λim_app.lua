@@ -11,7 +11,7 @@ laptop.register_app("λim", {
 		local data = mtos.bdev:get_app_storage('system', 'λim')
 		data.files = data.files or {}
 		if new_level == true then
-			data.text = level_code(level)
+			data.text = level_code(level.."_editable")
 			new_level = false
 		else
 			data.text = data.text or ""
@@ -76,6 +76,7 @@ laptop.register_app("λim", {
 			local func = {loadstring(cmd)}
 			if (func[1] ~= nil) then
 				func[1]()
+				init_level()
 			else 
 				minetest.chat_send_all("Error!")
 				minetest.chat_send_all(func[2])
