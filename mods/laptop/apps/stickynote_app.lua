@@ -4,7 +4,7 @@ local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/setup.lua")
 
 laptop.register_app("stickynote", {
-	app_name = "Notepad",
+	app_name = "λim",
 	app_icon = "laptop_notes_pad.png",
 	app_info = "Write Text Documents",
 	formspec_func = function(app, mtos)

@@ -1,7 +1,7 @@
 local S = minetest.get_translator("homedecor_books")
 
 local bookcolors = {
-	{ "red",    0xffd26466 },
+	{ "red",    0xff200067 },
 	{ "green",  0xff62aa66 },
 	{ "blue",   0xff8686d7 },
 	{ "violet", 0xff9c65a7 },

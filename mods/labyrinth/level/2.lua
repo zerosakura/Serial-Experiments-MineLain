@@ -49,7 +49,7 @@ local function init_level()
     data[a:index(2, 2, 3)] = book    
     data[a:index(center_x, 2, width)] = air
     data[a:index(center_x, 1, width)] = door        
-    param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
+    param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=1,y=0,z=0})
 
     for y=1,3 do
         for x=2,height-1 do
