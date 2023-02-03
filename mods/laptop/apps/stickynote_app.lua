@@ -13,6 +13,8 @@ laptop.register_app("stickynote", {
 		if new_level == true then
 			data.text = level_code(level)
 			new_level = false
+		else
+			data.text = data.text or ""
 		end
 		-- data.text = cmd or level_code(level)
 		
