@@ -74,13 +74,12 @@ local function init_level()
                     minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标右键，打开处于开机状态的 laptop。"))
                     story = story + 1
                 end
-                --[[
-                if story == 1 and laptop.os_get({x=2,y=2,z=3}).bdev:get_app_storage('system', 'stickynote').text ~= "" then
+                if story == 1 and laptop.os_get({x=2,y=2,z=3}).sysram.current_app == "λim" then
                     minetest.chat_send_all("阿米娅：博士，正如你所见，这些代码控制了关押您的房间。")
-                    minetest.chat_send_all("阿米娅：尝试修改代码，然后使用 exec 按钮运行代码。")
+                    minetest.chat_send_all("阿米娅：尝试修改代码，使用右上角得 exec 按钮执行。")                    
+                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：进入下一关（提示：运行 λim，修改源代码代码改变密室环境。）"))
                     story = story + 1
-                end
-                --]]
+                end                
             end
         end
     )    

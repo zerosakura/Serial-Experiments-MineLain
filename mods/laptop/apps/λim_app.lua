@@ -1,14 +1,14 @@
-local store_area = 'stickynote:files'
+local store_area = 'λim:files'
 local cmd = ''
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/setup.lua")
 
-laptop.register_app("stickynote", {
+laptop.register_app("λim", {
 	app_name = "λim",
 	app_icon = "laptop_notes_pad.png",
 	app_info = "Write Text Documents",
 	formspec_func = function(app, mtos)
-		local data = mtos.bdev:get_app_storage('system', 'stickynote')
+		local data = mtos.bdev:get_app_storage('system', 'λim')
 		data.files = data.files or {}
 		if new_level == true then
 			data.text = level_code(level)
@@ -41,7 +41,7 @@ laptop.register_app("stickynote", {
 		return formspec
 	end,
 	receive_fields_func = function(app, mtos, sender, fields)
-		local data = mtos.bdev:get_app_storage('system', 'stickynote')
+		local data = mtos.bdev:get_app_storage('system', 'λim')
 		if fields.text then
 			data.text = fields.text
 		end
