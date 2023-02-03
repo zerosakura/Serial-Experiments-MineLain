@@ -113,6 +113,7 @@ dofile(modpath .. "/styles/grassy.lua")
 dofile(modpath .. "/styles/glass.lua")
 dofile(modpath .. "/styles/cave.lua")
 dofile(modpath .. "/styles/club.lua")
+dofile(modpath .. "/message.lua")
 dofile(modpath .. "/setup.lua")
 
 function safe_clear(w, l)

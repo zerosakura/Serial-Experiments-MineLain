@@ -1,3 +1,5 @@
+--dofile(modpath .. "/message.lua")
+
 level = 1
 new_level = true
 
@@ -29,6 +31,7 @@ end
 
 function this_level()
     local player = minetest.get_player_by_name("singleplayer")
+    show_message(player, "Welcome","Amiya.png")
     player:set_pos({x=5,y=1.5,z=2})
     go_level(level)
 end
