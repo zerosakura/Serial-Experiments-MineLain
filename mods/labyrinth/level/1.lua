@@ -4,6 +4,7 @@ dofile(modpath .. "/level/1_editable.lua")
 story = 0
 
 local function init_story() 
+    story = 0
     minetest.chat_send_all("阿米娅：博士，博士...")
     minetest.chat_send_all("阿米娅：快醒醒...")
     minetest.chat_send_all("博士：我是谁，我在哪？")
@@ -35,7 +36,6 @@ function init_level()
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
 
-    minetest.set_timeofday(0.2)
     --player target coords
     center_x = math.floor((height+1)/2)
     center_z = math.floor((width+1)/2)
@@ -69,8 +69,8 @@ function init_level()
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
-                -- minetest.chat_send_all(dump(node))
-                if node.name == "doors:door_steel_a" then
+                minetest.chat_send_all(dump(node))
+                if string.find(node.name, "door") == 1 then
                     next_level()
                 end
 

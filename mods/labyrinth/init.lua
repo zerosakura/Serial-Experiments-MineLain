@@ -136,7 +136,8 @@ minetest.register_chatcommand("go", {
 
 minetest.register_on_joinplayer(
     function(player)
-        safe_clear(300, 300)
+        safe_clear(300, 300)        
+        minetest.set_timeofday(0.2)
         this_level()
     end
 )

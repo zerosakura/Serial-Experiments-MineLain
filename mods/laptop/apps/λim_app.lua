@@ -36,8 +36,7 @@ laptop.register_app("λim", {
 				mtos.theme:get_button('0,0.5;1.5,0.8', 'minor', 'clear', 'New', 'New file')..
 				mtos.theme:get_button('2,0.5;1.5,0.8', 'minor', 'load', 'Load', 'Load file')..
 				mtos.theme:get_button('4,0.5;1.5,0.8', 'minor', 'save', 'Save', 'Save file')..
-				mtos.theme:get_button('6,0.5;1.5,0.8', 'minor', 'exec', 'Exec', 'Exec file')..
-				mtos.theme:get_button('8,0.5;1.5,0.8', 'minor', 'print', 'Print', 'Print file')
+				mtos.theme:get_button('6,0.5;1.5,0.8', 'minor', 'exec', 'Exec', 'Exec file')
 		return formspec
 	end,
 	receive_fields_func = function(app, mtos, sender, fields)

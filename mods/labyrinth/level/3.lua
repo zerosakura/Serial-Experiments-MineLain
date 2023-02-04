@@ -51,8 +51,6 @@ function init_level()
     data[a:index(2, 1, 3)] = desk  
     -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
-    data[a:index(3, 2, 4)] = wall
-    data[a:index(4, 3, 5)] = wall    
     data[a:index(center_x, 6, width)] = door
     data[a:index(center_x, 7, width)] = air
 
@@ -60,9 +58,9 @@ function init_level()
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
-                if node.name == "doors:door_steel_a" then
+                if string.find(node.name, "door") == 1 then
                     next_level()
-                end                
+                end           
             end
         end
     )    

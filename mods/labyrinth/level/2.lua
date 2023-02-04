@@ -61,9 +61,9 @@ function init_level()
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
-                if node.name == "doors:door_steel_a" then
+                if string.find(node.name, "door") == 1 then
                     next_level()
-                end                
+                end      
             end
         end
     )    
