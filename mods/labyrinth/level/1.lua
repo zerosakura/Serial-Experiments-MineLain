@@ -1,7 +1,7 @@
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/level/1_editable.lua")
 
-story = 0
+local story = 0
 
 local function init_story() 
     story = 0

@@ -1,6 +1,8 @@
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/level/2_editable.lua")
 
+local story = 0
+
 function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(10, 10)
@@ -61,9 +63,19 @@ function init_level()
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
+                -- minetest.chat_send_all(dump(node))
                 if string.find(node.name, "door") == 1 then
                     next_level()
                 end      
+
+                local node2 = minetest.get_node({x=2,y=2,z=3})
+                if story == 0 and node2.name == "homedecor:book_open_red" then
+                    minetest.chat_send_all("阿米娅：嗯...书上好像记录了底层系统的某个操控方法，好像还有一些文字。（PS：这个文字我想放博士会被读取记忆的相关内容，这个我后面分一个文档写）。")
+                    minetest.chat_send_all("凯尔希：既不可创生，又不可死去，只能重建新的秩序了吗？")
+                    minetest.chat_send_all("阿米娅：博士，试着修改代码移动场景内的物品吧。")                    
+                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：修改源代码以逃出房间。"))
+                    story = story + 1
+                end
             end
         end
     )    
@@ -81,6 +93,18 @@ function init_level()
     end
 end
 
+local function init_story() 
+    story = 0
+    minetest.chat_send_all("博士：怎么回事？我们又回到了这个房间。")
+    minetest.chat_send_all("阿米娅：（果然整合运动对系统底层的加密不止一层。）")
+    minetest.chat_send_all("阿米娅：博士，我们得继续前进了。")
+    minetest.chat_send_all("阿米娅：那边的桌子上好像有一本书，打开看看吧。")    
+    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：查看桌上的神秘书本。"))
+end
+
 init_level()
+init_story()
+
+
 
 
