@@ -69,7 +69,7 @@ function init_level()
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
-                minetest.chat_send_all(dump(node))
+                -- minetest.chat_send_all(dump(node))
                 if string.find(node.name, "door") == 1 then
                     next_level()
                 end
