@@ -73,6 +73,12 @@ function init_level()
     vm:write_to_map(true)
 
     draw()
+    if (not verify()) then
+        minetest.chat_send_all("Error!")
+        minetest.chat_send_all("Check failed! ")
+        go_level(level.."_editable")
+        go_level(level)
+    end
 end
 
 init_level()

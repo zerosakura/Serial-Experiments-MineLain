@@ -98,8 +98,8 @@ function safe_clear(w, l)
     }
     local air = minetest.get_content_id("air")
     
-    for x=0, w do
-        for y=0,10 do
+    for x=0,w do
+        for y=-10,10 do
             for z=0,l do   
                 local node = minetest.get_node({x=x,y=y,z=z})
                 -- minetest.chat_send_all(dump(node))

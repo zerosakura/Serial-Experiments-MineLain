@@ -32,6 +32,7 @@ end
 function this_level()
     local player = minetest.get_player_by_name("singleplayer")    
     player:set_pos({x=5,y=1.5,z=2})
+    go_level(level.."_editable")
     go_level(level)
 end
 
@@ -42,5 +43,29 @@ function place(xx,yy,zz,ss)
         ss = "default:silver_sandstone_block"
     end
 
-    minetest.set_node({x=xx,y=yy,z=zz}, {name = ss})
+    if (minetest.get_node({x=xx,y=yy,z=zz}).name ~= "default:silver_sandstone_block") then
+        minetest.set_node({x=xx,y=yy,z=zz}, {name = ss})
+    else
+        minetest.chat_send_all("Error!")
+        minetest.chat_send_all("Cannot replace the stone!")
+    end
+end
+
+function check(node, numberA, comparator)
+    if node == "glass" then 
+        node = "xpanes:obsidian_pane_flat"
+    elseif node == "stone" then 
+        node = "default:silver_sandstone_block"
+    end
+    local numberB = 0
+    for x=0,31 do
+        for y=-10,10 do
+            for z=0,31 do
+                if(minetest.get_node({x=x,y=y,z=z}).name == node) then
+                    numberB = numberB+1
+                end
+            end
+        end
+    end
+    return comparator(numberA,numberB)
 end

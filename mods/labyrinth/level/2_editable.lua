@@ -6,16 +6,12 @@ function draw()
     end
 end
 
-function check()
-    local cnt = 0
-    for x=2,8 do
-        for y=1,3 do
-            for z=2,8 do
-                if get(x,y,z) == "glass" then
-                    cnt = cnt + 1
-                end
-            end
-        end
-    end
-    assert(cnt == 21)
+--Modifying this code will results in the error
+--修改该段代码将导致错误
+--{
+function verify()
+    return check("glass", 21, function (a, b)
+            return a == b
+    end)
 end
+--}
