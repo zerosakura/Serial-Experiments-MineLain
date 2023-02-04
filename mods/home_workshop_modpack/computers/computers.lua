@@ -78,9 +78,10 @@ minetest.register_node("computers:piepad", {
 	paramtype2 = "wallmounted",
 	light_source = 8,
 	walkable = false,
-	groups = {oddly_breakable_by_hand=2},
+	groups = {choppy=2, oddly_breakably_by_hand=2, dig_immediate = 2},
 	selection_box = {type = "wallmounted"},
-	sounds = default and default.node_sound_wood_defaults() or nil
+	sounds = default and default.node_sound_wood_defaults() or nil,
+	drop = "computers:piepad"
 })
 
 -- Commodore 64 lookalike

@@ -66,6 +66,7 @@ function init_level()
         end
     )    
 
+    minetest.add_item({x=2,y=2,z=2}, "laptop:usbstick")
     vm:set_data(data)
     vm:set_param2_data(param2)
     vm:write_to_map(true)
