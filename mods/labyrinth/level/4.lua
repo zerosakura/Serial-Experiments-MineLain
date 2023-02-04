@@ -1,6 +1,7 @@
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/level/4_editable.lua")
 
+local story = 0
 function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(31, 31)
@@ -79,6 +80,16 @@ function init_level()
     vm:write_to_map(true)
 
     draw()
+end
+
+function init_story()
+    story = 0
+    minetest.chat_send_all("凯尔希：这就是命运的最后了，历史沉浮，成王败寇。博士，您会成为怎样的人呢？")
+    minetest.chat_send_all("阿米娅：博士...您还好吗？")
+    minetest.chat_send_all("博士：......")
+    minetest.chat_send_all("凯尔希：敌人也抵达了最期的命运，眼前这座桥，或许是通往自由的天梯，又或许是前往冥土的奈何……生老病死，循环不息，生者死去为新路，新生者亦会蹈复辙。")
+    minetest.chat_send_all("阿米娅：博士，坚持住！就差最后一点了...他们要追上来了，博士，博士！")
+    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：抵达「门」。"))
 end
 
 init_level()

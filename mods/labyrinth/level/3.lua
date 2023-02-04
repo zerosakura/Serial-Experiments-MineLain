@@ -1,6 +1,7 @@
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/level/3_editable.lua")
 
+local story = 0
 function init_level()
     local player = minetest.get_player_by_name("singleplayer")
     safe_clear(10, 10)
@@ -72,6 +73,22 @@ function init_level()
     draw()
 end
 
+function init_story()
+    story = 0
+    minetest.chat_send_all("博士：嘶....头...好疼")
+    minetest.chat_send_all("阿米娅：博士！您还好吗？")
+    minetest.chat_send_all("凯尔希：敌人动手了，他们抓住了他动摇的瞬间，开始试图夺走他的记忆，想要把他最有价值的部分永远留在此处。")
+    minetest.chat_send_all("阿米娅：怎么这样！凯尔希阿姨，怎么办啊？")
+    minetest.chat_send_all("凯尔希：历史是滚动向前的，所有软弱与侥幸都会被命运的洪流所吞没。")
+    minetest.chat_send_all("阿米娅：你是在说这里只能前进不能后退吗？")
+    minetest.chat_send_all("凯尔希：不，敌人已经发现我们的越狱之旅了，敌人很快就会过来。")
+    minetest.chat_send_all("博士：嘶……")
+    minetest.chat_send_all("阿米娅：抱歉博士，我们只能加把劲了。快破解这里的代码逃出去吧，故技重施，一定难不倒您的吧？")
+    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：尝试修改代码以逃出房间。"))
+    story = story+1
+end
+
 init_level()
+init_story()
 
 
