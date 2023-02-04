@@ -32,6 +32,19 @@ end
 function this_level()
     local player = minetest.get_player_by_name("singleplayer")    
     player:set_pos({x=5,y=1.5,z=2})
+    id = player:hud_add({
+        hud_elem_type = "text",
+        position  = {x = 0.5, y = 0.40},
+        offset    = {x = 0, y = 0},
+        text      = "Level "..level,
+        alignment = 0,
+        scale     = {x = 120, y = 50},
+        number    = 0xFFFFFF,
+        size      = {x = 5, y = 2},
+    })
+    minetest.after(3, function ()
+        player:hud_remove(id)
+    end)
     go_level(level.."_editable")
     go_level(level)
 end
