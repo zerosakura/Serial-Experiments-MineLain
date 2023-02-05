@@ -4,13 +4,13 @@ dofile(modpath .. "/level/3_editable.lua")
 local story = 0
 function init_level()
     local player = minetest.get_player_by_name("singleplayer")
-    safe_clear(10, 10)
+    safe_clear(20, 20)
     width = 9
     height = 9
 
     --Copy to the map
     local vm         = minetest.get_voxel_manip()
-    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height*2,y=10,z=width*2})
+    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height*2,y=20,z=width*2})
     local data = vm:get_data()
     local param2 = vm:get_param2_data()
     local a = VoxelArea:new{
@@ -23,7 +23,8 @@ function init_level()
     local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
-
+    local book = minetest.get_content_id("homedecor:book_red")
+  
     --player target coords
     center_x = math.floor((height+1)/2)
     center_z = math.floor((width+1)/2)
@@ -34,7 +35,12 @@ function init_level()
         for z=1,width do --z        
             data[a:index(x, 0, z)] = wall
         end
-    end        
+    end 
+    for x=1,height do --x
+        for z=1,width do --z        
+            data[a:index(x, 15, z)] = wall
+        end
+    end          
     for y=0,8 do
         for z=1,width do
             data[a:index(1, y, z)] = wall
@@ -48,12 +54,18 @@ function init_level()
         end
     end 
 
+    
     data[a:index(2, 1, 2)] = desk
     data[a:index(2, 1, 3)] = desk  
     -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
     data[a:index(center_x, 6, width)] = door
     data[a:index(center_x, 7, width)] = air
+    data[a:index(5, 16, 5)] = book
+    
+     local meta1 = minetest.get_meta({ x = 5, y = 16,z = 5 })
+	meta1:set_string("title","5")
+	meta1:set_string("text","穿越到异世界的博士不可能这么有能")
 
     minetest.register_globalstep(
         function(dtime)
@@ -91,5 +103,4 @@ end
 
 init_level()
 init_story()
-
 
