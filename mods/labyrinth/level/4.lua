@@ -60,7 +60,7 @@ function init_level()
 
     data[a:index(2, 1, 2)] = desk
     data[a:index(2, 1, 3)] = desk    
-    data[a:index(2, 1, 2)] = ipad
+    data[a:index(2, 2, 2)] = ipad
     -- param2[a:index(center_x-3, 2, center_z-2)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
 
     data[a:index(center_x, 1, width)] = door

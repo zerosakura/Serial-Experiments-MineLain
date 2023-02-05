@@ -1,7 +1,6 @@
 -- Based on https://github.com/minetest-mods/realchess
 -- WTFPL by kilbith
-
---[[local realchess = {}
+local realchess = {}
 
 local function index_to_xy(idx)
 	idx = idx - 1
@@ -630,4 +629,3 @@ register_piece("king")
 			return 0
 		end,
 	})
---]]

@@ -1,4 +1,4 @@
---[[laptop.register_app("launcher_settings", {
+laptop.register_app("launcher_settings", {
 	app_name = "Settings",
 	app_icon = "laptop_setting_wrench.png",
 	app_info = "Desktop settings.",
@@ -61,4 +61,3 @@
 		end
 	end
 })
---]]

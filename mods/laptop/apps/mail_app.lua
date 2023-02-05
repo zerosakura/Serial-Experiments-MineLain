@@ -1,5 +1,4 @@
 -- based on https://github.com/cheapie/mail
---[[
 laptop.register_app("mail", {
 	app_name = "Mail",
 	app_icon = "laptop_email_letter.png",
@@ -285,4 +284,3 @@ laptop.register_view("mail:compose", {
 		end
 	end
 })
---]]

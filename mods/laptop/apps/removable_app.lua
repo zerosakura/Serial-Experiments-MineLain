@@ -1,4 +1,4 @@
---[[laptop.register_app("removable", {
+laptop.register_app("removable", {
 	app_name = "Removable Storage",
 	app_icon = "laptop_removable.png",
 	app_info = "Interface with Removable Media",
@@ -49,6 +49,7 @@
 			elseif fields.format_backup then
 				idata:format_disk("backup", "Backup of "..mtos.hwdef.description.." from "..os.date('%x'))
 				idata.meta:set_string("backup_data", mtos.meta:get_string('laptop_appdata'))
+				minetest.chat_send_all(mtos.meta:get_string('laptop_appdata'))
 			elseif fields.format_csbos then
 				idata:format_disk("boot", "CS-BOS Boot Disk")
 			elseif fields.restore then
@@ -60,4 +61,3 @@
 		laptop.mtos_cache:sync_and_free(mtos)
 	end,
 })
---]]

@@ -87,6 +87,15 @@ function init_level()
                     minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：进入下一关（提示：运行 λim，修改源代码代码改变密室环境。）"))
                     story = story + 1
                 end                
+
+                --[[
+                laptop.os_get({x=2,y=2,z=3}).sysram.current_app
+                -- laptop:usbstick
+                local usb = minetest.get_node()
+                local idata = mtos.bdev:get_removable_disk()                
+                idata:format_disk("backup", "Backup of "..mtos.hwdef.description.." from "..os.date('%x'))
+                idata.meta:set_string("backup_data", )                        
+                --]]
             end
         end
     )    

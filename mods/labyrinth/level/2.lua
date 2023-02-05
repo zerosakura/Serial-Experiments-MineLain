@@ -57,7 +57,9 @@ function init_level()
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=1,y=0,z=0})
 
     local meta = minetest.get_meta({ x = 2, y = 2, z = 3 })
-    meta:set_string("text", "111")
+    
+    meta:set_string("title", "RM-100")
+    meta:set_string("text", "本手册是关于RM-100计算机所搭载的特殊精神分析系统使用手册。本系统能利用微弱电流对大脑前额叶周边周边意识脑区进行刺激，使被分析者的意识进入被设定好幻境之中。再通过读取被分析者在幻境中活动所产生的生物电流及脑电波对被分析者的记忆及意识进行深度读取。被分析者在受试过程中可能会产生记忆混乱等症状。但当被分析者对幻境进行修改时，会产生自系统底层发生的混乱，可能会导致分析系统产生漏洞。")
 
     minetest.register_globalstep(
         function(dtime)

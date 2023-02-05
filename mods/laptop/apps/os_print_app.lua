@@ -1,5 +1,4 @@
 local printer_range = 10
---[[
 local function trigger_queue(app, mtos)
 	-- Check print requirements
 	if mtos.sysdata.selected_view ~= 'output' or
@@ -309,4 +308,3 @@ laptop.register_view("printer:app", {
 		end
 	end,
 })
---]]
