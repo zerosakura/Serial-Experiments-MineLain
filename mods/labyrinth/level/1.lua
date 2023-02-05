@@ -8,9 +8,10 @@ local function init_story()
     minetest.chat_send_all("阿米娅：博士，博士...")
     minetest.chat_send_all("阿米娅：快醒醒...")
     minetest.chat_send_all("博士：我是谁，我在哪？")
-    minetest.chat_send_all("阿米娅：博士，我是阿米娅，你被整合运动抓走了，霜星要拿你做实验 ...")
-    minetest.chat_send_all("博士：什么。")
-    minetest.chat_send_all("阿米娅：别担心，凯尔西已经黑入了整合运动的系统，看见桌上的 laptop 了吗？")
+    minetest.chat_send_all("阿米娅：您醒了！现在事态危机，乌萨斯与邻国的战争已经打响，整合运动又俘虏了您做秘密实验，现在您必须逃出去！！")    
+    minetest.chat_send_all("博士：逃出去？这里是哪？罗德岛的大家呢？")
+    minetest.chat_send_all("阿米娅：博士现在您的意识被困在了整合运动的计算机设备中，我们没有办法突破整合运动设置的层层防火墙！")
+    minetest.chat_send_all("阿米娅：别担心，凯尔西已经部分黑入了整合运动的系统，看见桌上的 laptop 了吗？它会指引你逃出这里。")
     minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标左键敲击两次，打开桌上的 laptop 并开机。"))
 end
 
@@ -78,11 +79,6 @@ function init_level()
     data[a:index(center_x, 2, width)] = air
     data[a:index(center_x, 1, width)] = door        
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
-    
-    --[[local meta = minetest.get_meta({ x = 4, y = 1,z = -1 })
-    meta:set_string("仰望星空", "3")
-    local meta = minetest.get_meta({ x = 4, y = 1,z = 12 })
-    meta:set_string("摩西开海，芝麻开", "5")--]]
 
     minetest.register_globalstep(
         function(dtime)
@@ -95,15 +91,20 @@ function init_level()
 
                 local node2 = minetest.get_node({x=2,y=2,z=3})
                 if story == 0 and node2.name == "laptop:portable_workstation_2_open_on" then
-                    minetest.chat_send_all("阿米娅：做的好，检测到 laptop 已在运行。")
+                    minetest.chat_send_all("阿米娅：检测到信号连接！")
+                    minetest.chat_send_all("汝命数未尽，命不该绝，等你摆脱枷锁，冲破此处的牢笼，必可以重见往日光明。")
+                    minetest.chat_send_all("博士：现在是谜语人的时候吗？我们就靠这台 laptop？")
+                    minetest.chat_send_all("凯尔希：当然。这是你的命运，也是你的幸运，更是你的力量。")
+                    minetest.chat_send_all("阿米娅：成功以后有的是空闲聊，博士，快逃吧！")
+                    minetest.chat_send_all("博士：好吧，我该怎么操作？")
                     minetest.chat_send_all("阿米娅：博士，接下来用鼠标右键进入 laptop 的操作界面。")
-                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：使用鼠标右键，打开处于开机状态的 laptop。"))
+                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：鼠标右键单击处于开机状态的 laptop ，进入 laptop 的交互界面。"))
                     story = story + 1
                 end
                 if story == 1 and laptop.os_get({x=2,y=2,z=3}).sysram.current_app == "λim" then
-                    minetest.chat_send_all("阿米娅：博士，正如你所见，这些代码控制了关押您的房间。")
-                    minetest.chat_send_all("阿米娅：尝试修改代码，使用右上角得 exec 按钮执行。")                    
-                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：进入下一关（提示：运行 λim，修改源代码代码改变密室环境。）"))
+                    minetest.chat_send_all("阿米娅：博士，整合运动将您的意识封锁在了计算机底层，具象化成了这个牢房，但是我们用 λim 编译了一部分他们的代码，我们需要一起协作找出其中的的漏洞！")
+                    minetest.chat_send_all("使用 λim 修改代码吧！然后点击右上角执行（EXEC）就可以反馈到这个房间之中！")
+                    minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：进入下一关（提示：运行 λim，修改源代码代码改变密室环境，记得离开房间带走 laptop，否则可能卡关。带走物品的方法是，对着它连按鼠标左键。）"))
                     story = story + 1
                 end                
             end
