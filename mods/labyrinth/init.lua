@@ -138,7 +138,7 @@ minetest.register_on_joinplayer(
     function(player)
         safe_clear(300, 300)        
         minetest.set_timeofday(0.2)
-        skins.set_player_skin(player, "arcnights docter");
+        skins.set_player_skin(player, "character_arknights_doctor")
         this_level()
     end
 )
