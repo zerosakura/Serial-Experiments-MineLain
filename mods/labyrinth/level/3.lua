@@ -34,7 +34,12 @@ function init_level()
         for z=1,width do --z        
             data[a:index(x, 0, z)] = wall
         end
-    end        
+    end
+    for x=1,height do --x
+        for z=1,width do --z        
+            data[a:index(x, 15, z)] = wall
+        end
+    end   
     for y=0,8 do
         for z=1,width do
             data[a:index(1, y, z)] = wall
@@ -54,6 +59,8 @@ function init_level()
 
     data[a:index(center_x, 6, width)] = door
     data[a:index(center_x, 7, width)] = air
+        local meta = minetest.get_meta({ x = 5, y = 16,z = 5 })
+    meta:set_string("穿越到异世界的博士不可能这么有能", "6")
 
     minetest.register_globalstep(
         function(dtime)
