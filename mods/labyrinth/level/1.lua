@@ -1,7 +1,7 @@
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/level/1_editable.lua")
 
-story = 0
+local story = 0
 
 local function init_story() 
     story = 0
@@ -59,7 +59,7 @@ function init_level()
         end
     end 
 
- for y=0,8 do
+    for y=0,8 do
         for z=-2,width+4 do
             data[a:index(-2, y, z)] = wall
             data[a:index(height+3, y, z)] = wall
@@ -69,7 +69,7 @@ function init_level()
         for y=0,8 do
             data[a:index(x, y, -2)] = wall
             data[a:index(x, y, width+4)] = wall
-	 data[a:index(x, y, width+1)] = wall
+	        data[a:index(x, y, width+1)] = wall
         end
     end 
     data[a:index(2, 1, 2)] = desk
@@ -78,16 +78,17 @@ function init_level()
     data[a:index(center_x, 2, width)] = air
     data[a:index(center_x, 1, width)] = door        
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
-    local meta = minetest.get_meta({ x = 4, y = 1,z = -1 })
+    
+    --[[local meta = minetest.get_meta({ x = 4, y = 1,z = -1 })
     meta:set_string("仰望星空", "3")
     local meta = minetest.get_meta({ x = 4, y = 1,z = 12 })
-    meta:set_string("摩西开海，芝麻开", "5")
+    meta:set_string("摩西开海，芝麻开", "5")--]]
 
     minetest.register_globalstep(
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
-                minetest.chat_send_all(dump(node))
+                -- minetest.chat_send_all(dump(node))
                 if string.find(node.name, "door") == 1 then
                     next_level()
                 end
