@@ -17,7 +17,7 @@ end
 
 function init_level()
     local player = minetest.get_player_by_name("singleplayer")
-    safe_clear(10, 10)
+    safe_clear(20, 20)
     width = 9
     height = 9
 
@@ -36,6 +36,8 @@ function init_level()
     local glass = minetest.get_content_id("xpanes:obsidian_pane_flat")
     local door = minetest.get_content_id("doors:door_steel_a")
     local desk = minetest.get_content_id("homedecor:table_mahogany")
+    local book = minetest.get_content_id("homedecor:book_red")
+    local stone = minetest.get_content_id("default:stone")
 
     --player target coords
     center_x = math.floor((height+1)/2)
@@ -77,8 +79,19 @@ function init_level()
     data[a:index(2, 1, 3)] = desk
     data[a:index(2, 2, 3)] = computer    
     data[a:index(center_x, 2, width)] = air
-    data[a:index(center_x, 1, width)] = door        
+    data[a:index(center_x, 1, width)] = door  
+    data[a:index(8, 1, 1)] = stone 
+    data[a:index(8, 2, 1)] = stone
+    data[a:index(2, 1, -1)] = book
+    data[a:index(2, 1, 12)] = book   
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
+	
+	local meta1 = minetest.get_meta({ x = 2, y = 1,z = -1 })
+	meta1:set_string("title","3")
+	meta1:set_string("text","仰望星空")
+    local meta2 = minetest.get_meta({ x = 2, y = 1,z = 12 })
+	meta2:set_string("title","5")
+	meta2:set_string("text","摩西开海，芝麻开")
 
     minetest.register_globalstep(
         function(dtime)
