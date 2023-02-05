@@ -1,7 +1,7 @@
 local modpath = minetest.get_modpath("labyrinth")
 dofile(modpath .. "/level/1_editable.lua")
 
-local story = 0
+story = 0
 
 local function init_story() 
     story = 0
@@ -22,7 +22,7 @@ function init_level()
 
     --Copy to the map
     local vm         = minetest.get_voxel_manip()
-    local emin, emax = vm:read_from_map({x=0,y=0,z=0}, {x=height,y=10,z=width})
+    local emin, emax = vm:read_from_map({x=-5,y=-5,z=-5}, {x=height+5,y=15,z=width+5})
     local data = vm:get_data()
     local param2 = vm:get_param2_data()
     local a = VoxelArea:new{
@@ -41,11 +41,11 @@ function init_level()
     center_z = math.floor((width+1)/2)
 
     --Set up the level itself        
-    for x=1,height do --x
-        for z=1,width do --z        
+     for x=-3,height+3 do --x
+        for z=-3,width+3 do --z        
             data[a:index(x, 0, z)] = wall
         end
-    end        
+    end          
     for y=0,8 do
         for z=1,width do
             data[a:index(1, y, z)] = wall
@@ -58,18 +58,36 @@ function init_level()
             data[a:index(x, y, width)] = wall
         end
     end 
+
+ for y=0,8 do
+        for z=-2,width+4 do
+            data[a:index(-2, y, z)] = wall
+            data[a:index(height+3, y, z)] = wall
+        end
+    end
+    for x=-2,height+3 do
+        for y=0,8 do
+            data[a:index(x, y, -2)] = wall
+            data[a:index(x, y, width+4)] = wall
+	 data[a:index(x, y, width+1)] = wall
+        end
+    end 
     data[a:index(2, 1, 2)] = desk
     data[a:index(2, 1, 3)] = desk
     data[a:index(2, 2, 3)] = computer    
     data[a:index(center_x, 2, width)] = air
     data[a:index(center_x, 1, width)] = door        
     param2[a:index(2, 2, 3)] = minetest.dir_to_facedir({x=-1,y=0,z=0})
+    local meta = minetest.get_meta({ x = 4, y = 1,z = -1 })
+    meta:set_string("仰望星空", "3")
+    local meta = minetest.get_meta({ x = 4, y = 1,z = 12 })
+    meta:set_string("摩西开海，芝麻开", "5")
 
     minetest.register_globalstep(
         function(dtime)
             if player then                
                 local node = minetest.get_node(player:get_pos())                
-                -- minetest.chat_send_all(dump(node))
+                minetest.chat_send_all(dump(node))
                 if string.find(node.name, "door") == 1 then
                     next_level()
                 end
@@ -87,15 +105,6 @@ function init_level()
                     minetest.chat_send_all(minetest.colorize("#ffff22", "任务更新：进入下一关（提示：运行 λim，修改源代码代码改变密室环境。）"))
                     story = story + 1
                 end                
-
-                --[[
-                laptop.os_get({x=2,y=2,z=3}).sysram.current_app
-                -- laptop:usbstick
-                local usb = minetest.get_node()
-                local idata = mtos.bdev:get_removable_disk()                
-                idata:format_disk("backup", "Backup of "..mtos.hwdef.description.." from "..os.date('%x'))
-                idata.meta:set_string("backup_data", )                        
-                --]]
             end
         end
     )    
@@ -109,4 +118,3 @@ end
 
 init_story()
 init_level()
-
